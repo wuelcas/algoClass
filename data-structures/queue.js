@@ -51,29 +51,52 @@ What's the time complexity?
  */
 
 function Queue(capacity) {
-  // implement me...
+  this.capacity = Number(capacity);
+  this.queue = {};
 }
 
 Queue.prototype.enqueue = function(value) {
-  // implement me...
+  const queueLength = this.count();
+  if (this.capacity < (queueLength + 1)) {
+    return "Capacity limit reached. Can't add more";
+  }
+  const newQueue = {};
+  newQueue[0] = value;
+  Object.keys(this.queue).forEach((index) => {
+    newQueue[Number(index) + 1] = this.queue[Number(index)];
+  });
+  this.queue = newQueue;
+  return this.count();
 };
 // Time complexity:
 
 Queue.prototype.dequeue = function() {
-  // implement me...
+  const lastQueueIndex = this.count() - 1;
+  const oldestItemAdded = this.queue[lastQueueIndex];
+  delete this.queue[lastQueueIndex];
+  return oldestItemAdded;
 };
 // Time complexity:
 
 Queue.prototype.peek = function() {
-  // implement me...
+  return this.queue[this.count() - 1];
 };
 
 Queue.prototype.count = function() {
-  // implement me...
+  return Object.keys(this.queue).length;
 };
 // Time complexity:
 
-
+const myQueue = new Queue(3);
+myQueue.enqueue(1);
+myQueue.enqueue(2);
+myQueue.enqueue(3);
+console.log(myQueue.queue);
+console.log('error: ', myQueue.enqueue(4));
+console.log(myQueue.dequeue());
+console.log(myQueue.dequeue());
+console.log(myQueue.enqueue(4));
+console.log(myQueue.queue);
 
 /*
 *** Exercises:
