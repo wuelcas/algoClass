@@ -51,29 +51,72 @@ What's the time complexity?
  */
 
 function Stack(capacity) {
-  // implement me...
+  this.capacity = Number(capacity);
+  this.stack = {};
 }
 
 Stack.prototype.push = function(value) {
-  // implement me...
+  const stackLength = this.count();
+  if (this.capacity < (stackLength + 1)) {
+    console.log("Capacity limit reached. Can't add more");
+    return;
+  }
+  this.stack[stackLength] = value;
 };
 // Time complexity:
 
 Stack.prototype.pop = function() {
-  // implement me...
+  const lastStackIndex = this.count() - 1;
+  if (this.count() == 0) {
+    return null;
+  }
+
+  const lastValue = this.stack[lastStackIndex];
+  const newStack = {};
+  Object.keys(this.stack).forEach((index) => {
+    if (index != lastStackIndex) {
+      newStack[index] = this.stack[index];
+    }
+  });
+  this.stack = newStack;
+  return lastValue;
 };
 // Time complexity:
 
 Stack.prototype.peek = function() {
-  // implement me...
+  return this.stack[this.count() - 1];
 };
 // Time complexity:
 
 Stack.prototype.count = function() {
-  // implement me...
+  return Object.keys(this.stack).length;
 };
 // Time complexity:
 
+
+const myStack = new Stack(4);
+myStack.push('first');
+myStack.push('second');
+myStack.push('third');
+myStack.push('fourth');
+console.log(myStack.stack);
+console.log('length', myStack.count());
+console.log('Pushing a fifth');
+myStack.push('this got to fail');
+console.log(myStack.stack);
+console.log('peek', myStack.peek());
+console.log('pop', myStack.pop());
+console.log(myStack.stack);
+console.log('pop', myStack.pop());
+console.log(myStack.stack);
+console.log('push one more');
+myStack.push('one more');
+console.log('peek', myStack.peek());
+console.log(myStack.stack);
+console.log('pop', myStack.pop());
+console.log('pop', myStack.pop());
+console.log('pop', myStack.pop());
+console.log('should be null', myStack.pop());
 
 /*
 *** Exercises:
